@@ -17,7 +17,7 @@ each point is an object that holds x and y coordinates
 */
 export type Stroke = {
   color: string;
-  point: Point[];
+  points: Point[];
 };
 
 export type Point = {
