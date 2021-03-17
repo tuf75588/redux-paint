@@ -36,17 +36,22 @@ function ColorPanel() {
   const dispatch = useDispatch();
   const onColorChange = (color: string) => dispatch(setStrokeColor(color));
   return (
-    <div className="window-colors-panel">
+    <div className="window colors-panel">
       <div className="title-bar">
         <div className="title-bar-text">Colors</div>
       </div>
-      <div className="window-body-colors">
+      <div className="window-body colors">
         {COLORS.map((color: string) => (
           <div
             key={color}
             onClick={() => onColorChange(color)}
             className="color"
-            style={{ background: color }}
+            style={{
+              backgroundColor: color,
+              height: 24,
+              width: 24,
+              display: 'inline-block',
+            }}
           />
         ))}
       </div>

@@ -3,7 +3,8 @@ import { Point } from './types';
 export const BEGIN_STROKE = 'BEGIN_STROKE'; // when the user presses the mouse button
 export const SET_STROKE_COLOR = 'SET_STROKE_COLOR';
 export const UPDATE_STROKE = 'UPDATE_STROKE'; // when the user moves the pressed mouse
-
+export const REDO = 'REDO';
+export const UNDO = 'UNDO';
 export const END_STROKE = 'END_STROKE'; // when the user releases the mouse
 
 export type Action =

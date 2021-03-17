@@ -4,6 +4,7 @@ import { beginStroke, endStroke, updateStroke } from './actions';
 import { currentStrokeSelector } from './selectors';
 import drawStroke from './lib/canvasUtils';
 import ColorPanel from './components/ColorPanel';
+import EditPanel from './components/EditPanel';
 function App() {
   /* the value in the the angle brackets is a "type variable" in typescript */
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -53,6 +54,7 @@ function App() {
 
   return (
     <div className="App">
+      <EditPanel />
       <ColorPanel />
       <canvas
         ref={canvasRef}

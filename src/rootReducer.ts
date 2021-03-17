@@ -10,6 +10,7 @@ import {
 const initialState: RootState = {
   currentStroke: { color: '#000', points: [] },
   strokes: [],
+  historyIndex: 0,
 };
 /* 
 A reducer simply returns some new state based on some sort of action
