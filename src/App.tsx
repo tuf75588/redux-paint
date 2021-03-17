@@ -2,7 +2,8 @@ import React, { useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { beginStroke, endStroke, updateStroke } from './actions';
 import { currentStrokeSelector } from './selectors';
-import drawStroke from './lib/canvasUtils'
+import drawStroke from './lib/canvasUtils';
+import ColorPanel from './components/ColorPanel';
 function App() {
   /* the value in the the angle brackets is a "type variable" in typescript */
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -41,17 +42,18 @@ function App() {
   };
 
   useEffect(() => {
-    const {context} = getCanvasWithContext();
+    const { context } = getCanvasWithContext();
     if (!context) {
       return;
     }
     requestAnimationFrame(() => {
-      drawStroke(context, currentStroke.points, currentStroke.color)
-    })
-  }, [currentStroke])
+      drawStroke(context, currentStroke.points, currentStroke.color);
+    });
+  }, [currentStroke]);
 
   return (
     <div className="App">
+      <ColorPanel />
       <canvas
         ref={canvasRef}
         onMouseDown={startDrawing}
