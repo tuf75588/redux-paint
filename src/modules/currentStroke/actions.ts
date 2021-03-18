@@ -5,7 +5,7 @@ export const UPDATE_STROKE = 'UPDATE_STROKE';
 export const SET_STROKE_COLOR = 'SET_STROKE_COLOR';
 export const END_STROKE = 'END_STROKE';
 
-export type currentStrokeAction =
+export type CurrentStrokeAction =
   | { type: typeof BEGIN_STROKE; payload: Point }
   | { type: typeof UPDATE_STROKE; payload: Point }
   | {
