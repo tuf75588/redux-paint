@@ -20,3 +20,4 @@ function reducer(
       return state;
   }
 }
+export default reducer;
