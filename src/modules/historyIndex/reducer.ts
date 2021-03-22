@@ -1,6 +1,5 @@
-import { Reducer } from 'react';
+
 import { RootState } from '../../types';
-import { HistoryActionIndex, UNDO, REDO, END_STROKE } from './actions';
 
 function reducer(
   state: RootState['historyIndex'] = 0,
