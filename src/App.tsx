@@ -1,13 +1,14 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { beginStroke, endStroke, updateStroke } from './actions';
 import { currentStrokeSelector } from './selectors';
 import drawStroke from './lib/canvasUtils';
 import ColorPanel from './components/ColorPanel';
 import EditPanel from './components/EditPanel';
+import { useCanvas } from './CanvasContext';
 function App() {
   /* the value in the the angle brackets is a "type variable" in typescript */
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const canvasRef = useCanvas();
   const currentStroke = useSelector(currentStrokeSelector);
   const dispatch = useDispatch();
   // type cast to boolean to check if we are drawing or not
