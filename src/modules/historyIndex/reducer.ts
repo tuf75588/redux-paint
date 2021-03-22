@@ -3,7 +3,7 @@ import { RootState } from '../../types';
 import { HistoryActionIndex, UNDO, REDO, END_STROKE } from './actions';
 
 function reducer(
-  state: RootState['historyIndex'],
+  state: RootState['historyIndex'] = 0,
   action: HistoryActionIndex
 ): RootState['historyIndex'] {
   switch (action.type) {

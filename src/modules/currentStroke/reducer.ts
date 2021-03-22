@@ -7,8 +7,13 @@ import {
 } from './actions';
 import { RootState } from '../../types';
 
+const initialState: RootState['currentStroke'] = {
+  points: [],
+  color: '#000',
+};
+
 function reducer(
-  state: RootState['currentStroke'],
+  state: RootState['currentStroke'] = initialState,
   action: CurrentStrokeAction
 ): RootState['currentStroke'] {
   switch (action.type) {

@@ -1,6 +1,21 @@
-import { rootReducer } from './rootReducer';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { createStore, applyMiddleware } from 'redux';
+import {
+  configureStore,
+  getDefaultMiddleware,
+  combineReducers,
+} from '@reduxjs/toolkit';
+import strokesReducer from './modules/strokes/reducer';
+import currentStrokeReducer from './modules/currentStroke/reducer';
+import historyReducer from './modules/historyIndex/reducer';
 import logger from 'redux-logger';
 
-export const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(logger)));
+const middleware = [...getDefaultMiddleware(), logger];
+
+export const store = configureStore({
+  reducer: combineReducers({
+    strokesReducer,
+    currentStrokeReducer,
+    historyReducer,
+  }),
+  middleware,
+});
