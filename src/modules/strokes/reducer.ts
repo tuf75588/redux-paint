@@ -1,21 +1,17 @@
+import { createReducer } from '@reduxjs/toolkit';
+import { endStroke } from './actions';
 import { RootState } from '../../types';
-import { END_STROKE, StrokesAction } from './actions';
 
-function reducer(
-  state: RootState['strokes'] = [],
-  action: StrokesAction
-) {
-  switch (action.type) {
-    case END_STROKE: {
-      if (!action.payload.stroke.points.length) return state;
-      return [
-        ...state.slice(0, state.length - action.payload.historyLimit),
-        action.payload.stroke,
-      ];
+const initialState: RootState['strokes'] = [];
+
+const reducer = createReducer(initialState, (builder) => {
+  builder.addCase(endStroke, (state, action) => {
+    const { stroke, historyIndex } = action.payload;
+    if (historyIndex === 0) {
+      state.push(stroke);
+    } else {
+      state.splice(-historyIndex, historyIndex, stroke);
     }
-    default: {
-      return state;
-    }
-  }
-}
+  });
+});
 export default reducer;
