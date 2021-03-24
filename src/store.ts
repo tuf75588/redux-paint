@@ -1,12 +1,12 @@
-import { composeWithDevTools } from 'redux-devtools-extension';
+
 import {
   configureStore,
   getDefaultMiddleware,
   combineReducers,
 } from '@reduxjs/toolkit';
-import strokesReducer from './modules/strokes/reducer';
-import currentStrokeReducer from './modules/currentStroke/reducer';
-import historyReducer from './modules/historyIndex/reducer';
+import strokesReducer from './modules/strokes/slice';
+import { currentStroke } from './modules/currentStroke/slice';
+import historyReducer from './modules/historyIndex/slice';
 import logger from 'redux-logger';
 
 const middleware = [...getDefaultMiddleware(), logger];
@@ -14,7 +14,7 @@ const middleware = [...getDefaultMiddleware(), logger];
 export const store = configureStore({
   reducer: combineReducers({
     strokesReducer,
-    currentStrokeReducer,
+    currentStroke,
     historyReducer,
   }),
   middleware,
