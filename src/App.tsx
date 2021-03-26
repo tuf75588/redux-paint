@@ -1,19 +1,24 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { beginStroke, endStroke, updateStroke } from './actions';
-import { currentStrokeSelector } from './selectors';
+import currentStrokeSelector from './modules/currentStroke/selectors';
+import strokesSelector from './modules/strokes/selectors';
+import historyIndexSelector from './modules/historyIndex/selectors'
 import drawStroke from './lib/canvasUtils';
 import ColorPanel from './components/ColorPanel';
 import EditPanel from './components/EditPanel';
 import { useCanvas } from './CanvasContext';
+import { RootState } from './types';
 function App() {
   /* the value in the the angle brackets is a "type variable" in typescript */
   const canvasRef = useCanvas();
-  const currentStroke = useSelector(currentStrokeSelector);
+  const currentStroke = useSelector<RootState, RootState['currentStroke']>(currentStrokeSelector);
+  const strokes = useSelector<RootState,RootState['strokes']>(strokesSelector);
+  const historyIndex = useSelector<RootState, RootState['historyIndex']>(historyIndexSelector)
   const dispatch = useDispatch();
   // type cast to boolean to check if we are drawing or not
   const isDrawing = !!currentStroke.points.length;
-
+  
   const getCanvasWithContext = (canvas = canvasRef.current) => {
     return { canvas, context: canvas?.getContext('2d') };
   };
