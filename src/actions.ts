@@ -1,4 +1,4 @@
-import { Point } from './types';
+import { Point } from './utils/types';
 
 export const BEGIN_STROKE = 'BEGIN_STROKE'; // when the user presses the mouse button
 export const SET_STROKE_COLOR = 'SET_STROKE_COLOR';

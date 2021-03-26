@@ -1,10 +1,4 @@
-import { RootState } from '../../types';
+import { RootState } from "../../utils/types"
 
-function currentStrokeSelector(state: RootState) {
-  return state.currentStroke;
-}
-export default currentStrokeSelector;
-
-
-
- 
+export const currentStrokeSelector = (state: RootState) =>
+  state.currentStroke

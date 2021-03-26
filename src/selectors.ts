@@ -3,7 +3,7 @@ selectors are simply functions that accept a state argument and return a specifi
 from it 
 */
 
-import { RootState } from './types';
+import { RootState } from './utils/types';
 
 export function currentStrokeSelector(state: RootState) {
   return state.currentStroke;
