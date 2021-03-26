@@ -3,8 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { beginStroke, endStroke, updateStroke } from './actions';
 import currentStrokeSelector from './modules/currentStroke/selectors';
 import strokesSelector from './modules/strokes/selectors';
-import historyIndexSelector from './modules/historyIndex/selectors'
-import drawStroke from './lib/canvasUtils';
+import historyIndexSelector from './modules/historyIndex/selectors';
+import drawStroke, { clearCanvas } from './lib/canvasUtils';
 import ColorPanel from './components/ColorPanel';
 import EditPanel from './components/EditPanel';
 import { useCanvas } from './CanvasContext';
@@ -12,13 +12,16 @@ import { RootState } from './types';
 function App() {
   /* the value in the the angle brackets is a "type variable" in typescript */
   const canvasRef = useCanvas();
-  const currentStroke = useSelector<RootState, RootState['currentStroke']>(currentStrokeSelector);
-  const strokes = useSelector<RootState,RootState['strokes']>(strokesSelector);
-  const historyIndex = useSelector<RootState, RootState['historyIndex']>(historyIndexSelector)
+  const currentStroke = useSelector<RootState, RootState['currentStroke']>(
+    currentStrokeSelector
+  );
+  const strokes = useSelector<RootState, RootState['strokes']>(strokesSelector);
+  const historyIndex = useSelector<RootState, RootState['historyIndex']>(
+    historyIndexSelector
+  );
   const dispatch = useDispatch();
-  // type cast to boolean to check if we are drawing or not
   const isDrawing = !!currentStroke.points.length;
-  
+
   const getCanvasWithContext = (canvas = canvasRef.current) => {
     return { canvas, context: canvas?.getContext('2d') };
   };
@@ -29,13 +32,33 @@ function App() {
     } = event;
     dispatch(beginStroke(offsetX, offsetY));
   };
+  useEffect(() => {
+    const { context } = getCanvasWithContext();
+    if (!context) {
+      return;
+    }
+    requestAnimationFrame(() => {
+      drawStroke(context, currentStroke.points, currentStroke.color);
+    });
+    // eslint-disable-next-line
+  }, [currentStroke]);
+
+  useEffect(() => {
+    const { canvas, context } = getCanvasWithContext();
+    if (!context || !canvas) {
+      return;
+    }
+    requestAnimationFrame(() => {
+      clearCanvas(canvas);
+
+      strokes.slice(0, strokes.length - historyIndex).forEach((stroke) => {
+        drawStroke(context, stroke.points, stroke.color);
+      });
+    });
+    // eslint-disable-next-line
+  }, [historyIndex, strokes]);
+
   const endDrawing = () => {
-    // if point coordinates exist
-    /* 
-    the endDrawing event handler will also trigger when the mouse leaves the canvas area.
-    This is why we check the isDrawing flag to dispatch the endStroke action only if we are
-    drawing a stroke
-    */
     if (isDrawing) {
       dispatch(endStroke());
     }
@@ -47,16 +70,6 @@ function App() {
     if (!isDrawing) return;
     dispatch(updateStroke(offsetX, offsetY));
   };
-
-  useEffect(() => {
-    const { context } = getCanvasWithContext();
-    if (!context) {
-      return;
-    }
-    requestAnimationFrame(() => {
-      drawStroke(context, currentStroke.points, currentStroke.color);
-    });
-  }, [currentStroke]);
 
   return (
     <div className="window">
