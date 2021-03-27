@@ -1,8 +1,8 @@
 import React, { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { EditPanel } from "./shared/EditPanel"
-import {
-  drawStroke,
+import EditPanel from "./shared/EditPanel"
+import drawStroke, {
+
   clearCanvas,
   setCanvasSize,
 } from "./utils/canvasUtils"
@@ -11,9 +11,8 @@ import {
   updateStroke,
 } from "./modules/currentStroke/slice"
 import { endStroke } from "./modules/sharedActions"
-import { ModalLayer } from "./ModalLayer"
 import { useCanvas } from "./CanvasContext"
-import { ColorPanel } from "./shared/ColorPanel"
+import ColorPanel from './shared/ColorPanel'
 import { FilePanel } from "./shared/FilePanel"
 import { RootState } from "./utils/types"
 import { historyIndexSelector } from "./modules/historyIndex/selectors"
@@ -50,6 +49,7 @@ function App() {
     requestAnimationFrame(() =>
       drawStroke(context, currentStroke.points, currentStroke.color)
     )
+    // eslint-disable-next-line 
   }, [currentStroke])
 
   useEffect(() => {
@@ -66,6 +66,7 @@ function App() {
           drawStroke(context, stroke.points, stroke.color)
         })
     })
+    // eslint-disable-next-line 
   }, [historyIndex, strokes])
 
   const endDrawing = () => {
@@ -99,6 +100,7 @@ function App() {
     context.strokeStyle = "black"
 
     clearCanvas(canvas)
+    // eslint-disable-next-line 
   }, [])
 
   return (
@@ -114,7 +116,7 @@ function App() {
       <ColorPanel />
       <EditPanel />
       <FilePanel />
-      <ModalLayer />
+
       <canvas
         onMouseDown={startDrawing}
         onMouseUp={endDrawing}
